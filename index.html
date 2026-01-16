@@ -8,98 +8,98 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="video-bg">
-        <video autoplay muted loop playsinline id="bg-video">
-            <source src="https://www.pexels.com/download/video/3129671/" type="video/mp4">
-        </video>
-        <div class="overlay"></div>
+<div class="video-bg">
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="https://www.pexels.com/download/video/3129671/" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+</div>
+
+<nav class="glass-nav">
+    <div class="logo-container" onclick="showPage('home')">
+        <div class="animated-brain"><i class="fas fa-microchip"></i></div>
+        <div class="logo-text">BRAIN<span>BARTER</span></div>
     </div>
+    <ul class="menu">
+        <li onclick="showPage('home')">Executive Home</li>
+        <li onclick="showPage('discover')">Skill Market</li>
+        <li onclick="showPage('teach')">Contribution</li>
+        <li onclick="showPage('profile')">The Vault</li>
+    </ul>
+    <div class="credit-pill">
+        <i class="fas fa-shield-halved"></i> 
+        <span id="balance">5.0</span> Units
+    </div>
+</nav>
 
-    <nav class="glass-nav">
-        <div class="logo-container" onclick="showPage('home')">
-            <div class="animated-brain"><i class="fas fa-microchip"></i></div>
-            <div class="logo-text">BRAIN<span>BARTER</span></div>
+<main id="view-port">
+    <section id="home" class="view active">
+        <div class="hero-content">
+            <h1 class="glow-text">The Global Intellect Economy</h1>
+            <p>Monetize your expertise through time-based bartering. Acquire high-level skills via direct peer-to-peer knowledge transfer protocols.</p>
+            <div class="btn-group">
+                <button class="prime-btn" onclick="showPage('discover')">Browse Expertise</button>
+                <button class="outline-btn" onclick="showPage('teach')">Register as Mentor</button>
+            </div>
         </div>
-        <ul class="menu">
-            <li onclick="showPage('home')">Executive Home</li>
-            <li onclick="showPage('discover')">Skill Market</li>
-            <li onclick="showPage('teach')">Contribution</li>
-            <li onclick="showPage('profile')">The Vault</li>
-        </ul>
-        <div class="credit-pill">
-            <i class="fas fa-shield-halved"></i> 
-            <span id="balance">5.0</span> Units
+    </section>
+
+    <section id="discover" class="view">
+        <h2 class="page-title">Verified Expertise</h2>
+        <div class="grid" id="market-grid"></div>
+    </section>
+
+    <section id="teach" class="view">
+        <div class="glass-form">
+            <h2>Deploy Your Knowledge</h2>
+            <p>Contribute a 30-minute high-impact session to authorize 1.0 Credit Unit to your secure account.</p>
+            <div class="input-group">
+                <input type="text" id="skillName" placeholder="Specify Domain (e.g. Full-Stack Architecture)">
+                <select id="skillCat">
+                    <option value="Coding">Software Engineering</option>
+                    <option value="Communication">Strategic Communication</option>
+                    <option value="Creative">Visual Design</option>
+                </select>
+                <button class="prime-btn action-btn" onclick="listNewSkill()">Initialize Listing</button>
+            </div>
+            <div class="sim-box">
+                <p style="margin-bottom:10px;">Validation Protocol: Simulate Session</p>
+                <button class="prime-btn action-btn" onclick="earnCreditManual()">Authorize 1.0 Unit</button>
+            </div>
         </div>
-    </nav>
+    </section>
 
-    <main id="view-port">
-        <section id="home" class="view active">
-            <div class="hero-content">
-                <h1 class="glow-text">The Global Intellect Economy</h1>
-                <p>Monetize your expertise through time-based bartering. Acquire high-level skills via direct peer-to-peer knowledge transfer protocols.</p>
-                <div class="btn-group">
-                    <button class="prime-btn" onclick="showPage('discover')">Browse Expertise</button>
-                    <button class="outline-btn" onclick="showPage('teach')">Register as Mentor</button>
-                </div>
+    <section id="profile" class="view">
+        <div class="vault-grid">
+            <div class="glass stats-card">
+                <h3>Available Capital</h3>
+                <div class="big-num" id="vault-points">5.0</div>
+                <p>Knowledge Credits</p>
             </div>
-        </section>
+            <div class="glass history-card">
+                <h3>Active Engagements</h3>
+                <div id="session-list" class="session-list"></div>
+            </div>
+        </div>
+        <button class="prime-btn action-btn" onclick="resetApp()">Factory Reset Data</button>
+    </section>
+</main>
 
-        <section id="discover" class="view">
-            <h2 class="page-title">Verified Expertise</h2>
-            <div class="grid" id="market-grid"></div>
-        </section>
-
-        <section id="teach" class="view">
-            <div class="glass-form">
-                <h2>Deploy Your Knowledge</h2>
-                <p>Contribute a 30-minute high-impact session to authorize 1.0 Credit Unit to your secure account.</p>
-                <div class="input-group">
-                    <input type="text" id="skillName" placeholder="Specify Domain (e.g. Full-Stack Architecture)">
-                    <select id="skillCat">
-                        <option value="Coding">Software Engineering</option>
-                        <option value="Communication">Strategic Communication</option>
-                        <option value="Creative">Visual Design</option>
-                    </select>
-                    <button class="prime-btn" onclick="listNewSkill()">Initialize Listing</button>
-                </div>
-                <div class="sim-box">
-                    <p>Validation Protocol: Simulate Session</p>
-                    <button class="timer-btn" onclick="earnCreditManual()">Authorize 1.0 Unit</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="profile" class="view">
-            <div class="vault-grid">
-                <div class="glass stats-card">
-                    <h3>Available Capital</h3>
-                    <div class="big-num" id="vault-points">5.0</div>
-                    <p>Knowledge Credits</p>
-                </div>
-                <div class="glass history-card">
-                    <h3>Active Engagements</h3>
-                    <div id="session-list" class="session-list"></div>
-                </div>
-            </div>
-            <button class="reset-btn" onclick="resetApp()">Factory Reset Data</button>
-        </section>
-    </main>
-
-    <div id="schedule-modal" class="modal">
-        <div class="modal-content glass">
-            <h3>Confirm Engagement</h3>
-            <p id="modal-mentor-info"></p>
-            <div class="modal-inputs">
-                <input type="date" id="sched-date">
-                <input type="time" id="sched-time">
-            </div>
-            <div class="modal-btns">
-                <button class="prime-btn" onclick="confirmSchedule()">Confirm Barter</button>
-                <button class="close-btn" onclick="closeModal()">Abort</button>
-            </div>
+<div id="schedule-modal" class="modal">
+    <div class="modal-content glass">
+        <h3>Confirm Engagement</h3>
+        <p id="modal-mentor-info"></p>
+        <div class="modal-inputs">
+            <input type="date" id="sched-date">
+            <input type="time" id="sched-time">
+        </div>
+        <div class="modal-btns">
+            <button class="prime-btn" onclick="confirmSchedule()">Confirm Barter</button>
+            <button class="close-btn" onclick="closeModal()">Abort</button>
         </div>
     </div>
+</div>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

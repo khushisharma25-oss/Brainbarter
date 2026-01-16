@@ -1,131 +1,91 @@
-// --- DATABASE & STATE ---
 let state = {
-    points: parseInt(localStorage.getItem('bb_credits')) || 5,
+    points: parseFloat(localStorage.getItem('bb_credits')) || 5.0,
     sessions: JSON.parse(localStorage.getItem('bb_meetings')) || [],
     market: [
-        { id: 1, name: "Advanced Python", mentor: "CodeMaster", cat: "Coding" },
-        { id: 2, name: "English Speaking", mentor: "Professor Sarah", cat: "Communication" },
-        { id: 3, name: "Digital Portrait Art", mentor: "Leo", cat: "Creative" }
+        { id: 1, name: "Neural Network Architecture", mentor: "Dr. Aris", cat: "Coding" },
+        { id: 2, name: "Executive Leadership Strategy", mentor: "Sarah Chen", cat: "Communication" },
+        { id: 3, name: "FinTech Product Ecosystems", mentor: "Marcus V.", cat: "Creative" }
     ]
 };
 
 let pendingMentor = null;
 
-// --- PAGE NAVIGATION ---
 function showPage(pageId) {
     document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
-    
-    // Refresh Dynamic Data
     if(pageId === 'discover') renderMarket();
     if(pageId === 'profile') renderVault();
     updateUI();
 }
 
-// --- CORE UI UPDATES ---
-function updateUI() {
-    document.getElementById('balance').innerText = state.points;
-}
+function updateUI() { document.getElementById('balance').innerText = state.points.toFixed(1); }
 
-// --- MARKETPLACE LOGIC ---
 function renderMarket() {
     const grid = document.getElementById('market-grid');
     grid.innerHTML = state.market.map(item => `
         <div class="glass skill-card">
-            <small style="color:var(--neon)">${item.cat}</small>
-            <h3 style="margin:10px 0">${item.name}</h3>
-            <p style="opacity:0.7">Mentor: ${item.mentor}</p>
-            <button class="prime-btn" style="margin-top:15px; width:100%" onclick="openScheduler(${item.id})">Schedule Session</button>
+            <small style="color:var(--neon); letter-spacing: 3px; font-weight: bold;">${item.cat.toUpperCase()}</small>
+            <h3 style="margin:20px 0; font-size: 1.6rem;">${item.name}</h3>
+            <p style="opacity:0.5; font-size: 0.9rem;">Lead Specialist: ${item.mentor}</p>
+            <button class="prime-btn" style="margin-top:25px; width:100%" onclick="openScheduler(${item.id})">Initiate Swap</button>
         </div>
     `).join('');
 }
 
-// --- SCHEDULING SYSTEM ---
 function openScheduler(id) {
-    if(state.points < 1) {
-        alert("Oops! You need at least 1 credit. Try teaching a session first!");
-        return;
-    }
+    if(state.points < 1.0) { alert("Authorization Denied: Insufficient Capital."); return; }
     pendingMentor = state.market.find(m => m.id === id);
-    document.getElementById('modal-mentor-info').innerText = `Learning ${pendingMentor.name} with ${pendingMentor.mentor}`;
+    document.getElementById('modal-mentor-info').innerText = `Syncing Protocol: ${pendingMentor.name} with ${pendingMentor.mentor}`;
     document.getElementById('schedule-modal').style.display = 'flex';
 }
 
 function confirmSchedule() {
     const date = document.getElementById('sched-date').value;
     const time = document.getElementById('sched-time').value;
-
-    if(!date || !time) {
-        alert("Please select both date and time.");
-        return;
-    }
-
-    // Process Transaction
-    state.points -= 1;
-    state.sessions.push({
-        mentor: pendingMentor.mentor,
-        skill: pendingMentor.name,
-        date: date,
-        time: time
-    });
-
+    if(!date || !time) return alert("System Error: Incomplete Timestamp.");
+    state.points -= 1.0;
+    state.sessions.push({ mentor: pendingMentor.mentor, skill: pendingMentor.name, date, time });
     saveData();
     closeModal();
-    alert("Success! Session booked. Check your Vault.");
     showPage('profile');
 }
 
-// --- TEACHING LOGIC ---
 function listNewSkill() {
     const name = document.getElementById('skillName').value;
     const cat = document.getElementById('skillCat').value;
-    if(!name) return alert("Please enter a skill name.");
-
-    state.market.push({ id: Date.now(), name, mentor: "You", cat });
-    alert("Your skill is now live! Others can barter with you.");
+    if(!name) return alert("System Error: Specification Required.");
+    state.market.push({ id: Date.now(), name, mentor: "Executive User", cat });
+    alert("Domain Successfully Deployed.");
     showPage('discover');
 }
 
-function earnCreditManual() {
-    state.points += 1;
-    saveData();
-    updateUI();
-    alert("Session simulated! +1 Brain Credit earned.");
-}
+function earnCreditManual() { state.points += 1.0; saveData(); updateUI(); }
 
-// --- VAULT (PROFILE) RENDER ---
 function renderVault() {
-    document.getElementById('vault-points').innerText = state.points;
+    document.getElementById('vault-points').innerText = state.points.toFixed(1);
     const list = document.getElementById('session-list');
-    
-    if(state.sessions.length === 0) {
-        list.innerHTML = "<p style='opacity:0.5'>You haven't scheduled any learning yet.</p>";
-    } else {
-        list.innerHTML = state.sessions.map(s => `
+    list.innerHTML = state.sessions.length === 0 ? 
+        "<p style='opacity:0.3; font-style: italic;'>No active session logs detected in memory.</p>" : 
+        state.sessions.map(s => `
             <div class="session-item">
-                <strong>${s.skill}</strong> with ${s.mentor}<br>
-                <small><i class="fas fa-clock"></i> ${s.date} at ${s.time}</small>
+                <strong style="font-size: 1.1rem;">${s.skill}</strong> | Host: ${s.mentor}<br>
+                <small style="color:var(--neon); letter-spacing: 1px;">Execution Time: ${s.date} @ ${s.time}</small>
             </div>
         `).join('');
-    }
 }
 
-// --- STORAGE & RESET ---
 function saveData() {
     localStorage.setItem('bb_credits', state.points);
     localStorage.setItem('bb_meetings', JSON.stringify(state.sessions));
 }
 
-function closeModal() {
-    document.getElementById('schedule-modal').style.display = 'none';
-}
+function closeModal() { document.getElementById('schedule-modal').style.display = 'none'; }
 
 function resetApp() {
-    if(confirm("Wipe all data? This cannot be undone.")) {
+    if(confirm("Factory Reset? All distributed memory logs will be purged.")) {
         localStorage.clear();
         location.reload();
     }
 }
 
-// Initialize
 window.onload = () => showPage('home');
