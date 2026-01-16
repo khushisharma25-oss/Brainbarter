@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap');
+
+:root {
+    --neon: #00f2fe;
+    --purple: #7000ff;
+    --glass: rgba(255, 255, 255, 0.08);
+    --border: rgba(255, 255, 255, 0.15);
+}
+
+* { margin:0; padding:0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; color: white; background: #000; overflow: hidden; }
+
+/* Video Layer */
+.video-bg { position: fixed; top:0; left:0; width: 100vw; height: 100vh; z-index: -1; }
+#bg-video { width: 100%; height: 100%; object-fit: cover; }
+.overlay { position: absolute; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
+
+/* ANIMATED BRAIN LOGO */
+.logo-container { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+.animated-brain {
+    font-size: 1.8rem;
+    color: var(--neon);
+    animation: brainThrob 2.5s infinite ease-in-out;
+    filter: drop-shadow(0 0 5px var(--neon));
+}
+@keyframes brainThrob {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 15px var(--neon)); }
+}
+.logo-text { font-weight: 800; font-size: 1.2rem; letter-spacing: 1px; }
+.logo-text span { color: var(--neon); }
+
+/* Glass Navigation */
+.glass-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 6%; background: var(--glass); backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border);
+}
+.menu { display: flex; list-style: none; gap: 2.5rem; }
+.menu li { cursor: pointer; font-size: 0.9rem; font-weight: 500; opacity: 0.7; transition: 0.3s; }
+.menu li:hover { opacity: 1; color: var(--neon); transform: translateY(-2px); }
+
+/* Dynamic Views */
+.view { display: none; padding: 4rem 6%; height: 85vh; overflow-y: auto; text-align: center; }
+.view.active { display: block; animation: pageEnter 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+
+@keyframes pageEnter {
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Glass Cards */
+.glass { background: var(--glass); border: 1px solid var(--border); 
+          border-radius: 24px; backdrop-filter: blur(20px); padding: 30px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-top: 2rem; }
+.skill-card { transition: 0.4s; text-align: left; }
+.skill-card:hover { transform: translateY(-10px); border-color: var(--neon); box-shadow: 0 10px 30px rgba(0, 242, 254, 0.15); }
+
+/* Buttons */
+.prime-btn { background: linear-gradient(90deg, var(--neon), var(--purple)); 
+             border: none; padding: 14px 35px; border-radius: 50px; color: white;
+             font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+.prime-btn:hover { box-shadow: 0 0 20px var(--neon); transform: scale(1.05); }
+
+/* Modal Styles */
+.modal { display: none; position: fixed; top:0; left:0; width: 100%; height:100%; 
+          background: rgba(0,0,0,0.85); z-index: 100; align-items: center; justify-content: center; }
+.modal-content { max-width: 450px; width: 90%; position: relative; }
+.modal-icon { font-size: 3rem; color: var(--neon); margin-bottom: 1rem; }
+input, select { background: rgba(255,255,255,0.05); border: 1px solid var(--border); 
+                padding: 12px; color: white; width: 100%; margin: 10px 0; border-radius: 12px; }
+
+/* Profile Vault */
+.big-num { font-size: 4rem; font-weight: 800; color: var(--neon); margin: 10px 0; }
+.session-list { text-align: left; margin-top: 15px; }
+.session-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--neon); }
